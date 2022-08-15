@@ -1,11 +1,11 @@
 package containers;
 
+import exceptions.ItemAlreadyPlacedException;
 import exceptions.ItemStoreException;
 import items.Apple;
 import items.Item;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Bag extends Container {
     final static int maxWeight = 100;
@@ -20,7 +20,7 @@ public class Bag extends Container {
     @Override
     public void addItem(Item item) {
         super.addItem(item);
-            getWeight();
+        getWeight();
 
 
     }
@@ -37,6 +37,8 @@ public class Bag extends Container {
         }
         return allWeight;
     }
+
+
     public Item searchByName(String name) {
         Item item = null;
         if(!items.isEmpty()) {

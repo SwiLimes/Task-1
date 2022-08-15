@@ -12,6 +12,10 @@ public abstract class Container {
         return size;
     }
 
+    /**
+     * Добавить предмет
+     * @param item
+     */
     public void addItem(Item item) {
         this.items.add(item);
     }

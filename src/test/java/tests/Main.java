@@ -5,6 +5,7 @@ import enums.Shape;
 import items.Apple;
 import items.Board;
 import items.Brick;
+import items.Item;
 
 
 import java.util.Collections;
@@ -17,5 +18,9 @@ public class Main {
         container.addItem(new Brick("Brick", 52, Shape.SQUARE));
         container.addItem(new Brick("Brick", 55, Shape.SQUARE));
         container.printItems();
+
+
+        Item foundedItem = ((Bag)container).searchByName("Apple");
+        System.out.println("I found this:\n" + foundedItem);
     }
 }

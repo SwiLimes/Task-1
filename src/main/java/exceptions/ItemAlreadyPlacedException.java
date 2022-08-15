@@ -1,4 +1,4 @@
 package exceptions;
 
-public class ItemAlreadyPlacedException {
+public class ItemAlreadyPlacedException extends Throwable {
 }
