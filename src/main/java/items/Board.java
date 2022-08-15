@@ -8,7 +8,7 @@ public class Board extends Item {
         super(name, weight, size, shape);
     }
 
-    public Board createDefaultBoard() {
+    public static Board createDefaultBoard() {
         return new Board("Board", 5, 5, Shape.FLAT);
     }
 }

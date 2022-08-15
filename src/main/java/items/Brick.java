@@ -7,7 +7,7 @@ public class Brick extends Item {
         super(name, weight, shape);
     }
 
-    public Brick createDefaultBrick() {
+    public static Brick createDefaultBrick() {
         return new Brick("Brick", 10, Shape.SQUARE);
     }
 

@@ -1,5 +1,6 @@
 package containers;
 
+import exceptions.ItemStoreException;
 import items.Apple;
 import items.Item;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class Bag extends Container {
     final static int maxWeight = 100;
-    private double allWeight = 0;
+//    private double allWeight = 0;
 
     public Bag() {}
 
@@ -18,14 +19,23 @@ public class Bag extends Container {
 
     @Override
     public void addItem(Item item) {
-        if(getWeight(item)) super.addItem(item);
-        else throw new IllegalArgumentException("Превышен максимальный вес сумки");
+        super.addItem(item);
+            getWeight();
+
+
     }
 
-    public boolean getWeight(Item item) {
-        if(allWeight + item.getWeight() > maxWeight) return false;
-        allWeight += item.getWeight();
-        return true;
+    public double getWeight()  {
+        double allWeight = 0;
+        for(Item item : items) {
+            try {
+                if((allWeight + item.getWeight() > maxWeight)) throw new ItemStoreException();
+                else allWeight += item.getWeight();
+            } catch (ItemStoreException exception) {
+                System.out.println("Вес сумки превышает предельное значение");
+            }
+        }
+        return allWeight;
     }
     public Item searchByName(String name) {
         Item item = null;
