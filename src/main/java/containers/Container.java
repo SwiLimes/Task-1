@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Container {
-    protected List<Item> items = new ArrayList<>();
+//    protected List<Item> items = new ArrayList<>();
     private int size;
+
 
     public int getSize() {
         return size;
@@ -16,21 +17,12 @@ public abstract class Container {
      * Добавить предмет
      * @param item
      */
-    public void addItem(Item item) {
-        this.items.add(item);
-    }
+    public abstract void addItem(Item item);
 
 
 
 
-    public Item takeItem() {
-        return items.get((int) Math.random());
-    }
-    public List<Item> getItems() {
-       return this.items;
-    }
+    public abstract Item takeItem();
 
-    public void printItems() {
-        items.forEach(System.out::println);
-    }
+//    public abstract void printItems();
 }

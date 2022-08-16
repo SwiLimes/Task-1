@@ -12,8 +12,4 @@ public class Apple extends Item {
         return new Apple("Apple", 2, Shape.SQUARE, "orange");
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 }
