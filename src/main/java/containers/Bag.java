@@ -1,65 +1,55 @@
 package containers;
 
-import exceptions.ItemAlreadyPlacedException;
+import enums.Shape;
+import exceptions.ContainerIsEmptyException;
 import exceptions.ItemStoreException;
-import items.Apple;
 import items.Item;
+import writers.SVGWriter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Bag extends Container {
-    private List<Item> items = new ArrayList<>();
-    final static int maxWeight = 100;               // Максимально-допустимый вес
-//    private double allWeight = 0;
+
+    public Bag(String name, int size, double weight, String color, double maxWeight) {
+        super(name, size, weight, Shape.SQUARE, color, new ArrayList<>(), maxWeight);
+    }
+
+    public static Bag createDefaultBag() {
+        return new Bag("Bag", 30, 5,"orange", 50);
+    }
 
     @Override
     public Item takeItem() {
-        return null;
+        if(canTakeItem()) return itemsContainer.remove((int)Math.random());
+        else throw new ContainerIsEmptyException();
     }
 
-    public Bag() {
-    }
 
-    public Bag(ArrayList<Item> items) {
-        this.items = items;
+    @Override
+    public boolean canAddItem(Item item) {
+        super.canAddItem(item);
+        if(this.calcWeight(item.getWeight()) > maxWeight) throw new ItemStoreException();
+        return true;
     }
 
     @Override
-    public void addItem(Item item) {
-        items.add(item);
-        getWeight();
-
-
+    public int getW() {
+        return getSize() * 25;
     }
 
-    /**
-     * Подсчет общего веса в сумке
-     */
-    public double getWeight() {
-        double allWeight = 0;
-        for (Item item : items) {
-            try {
-                if ((allWeight + item.getWeight() > maxWeight)) throw new ItemStoreException();
-                else allWeight += item.getWeight();
-            } catch (ItemStoreException exception) {
-                System.out.println("Вес сумки превышает предельное значение");
+    @Override
+    public int getH() {
+        return getSize() * 10;
+    }
+
+
+    @Override
+    public void draw(int x, int y, SVGWriter picture) {
+        picture.writeRoundRect(x, y, getW(), getH(), 30, 50, getColor());
+        if(canTakeItem()) {
+            for (Item item : itemsContainer) {
+                item.draw(x + 20, y + 60, picture);
             }
         }
-        return allWeight;
     }
-
-    /**
-     * Поиск предмета по имени
-     */
-    public Item searchByName(String name) {
-        Item item = null;
-        if (!items.isEmpty()) {
-            for (Item currentItem : items) {
-                if (currentItem.getName().equals(name)) item = currentItem;
-            }
-        }
-        return item;
-    }
-
 }

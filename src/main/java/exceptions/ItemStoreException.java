@@ -1,6 +1,6 @@
 package exceptions;
 
-public class ItemStoreException extends Exception {
+public class ItemStoreException extends RuntimeException {
 
     public ItemStoreException() {
         super("Container is full");

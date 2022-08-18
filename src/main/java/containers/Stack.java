@@ -1,24 +1,55 @@
 package containers;
 
 import enums.Shape;
+import exceptions.ContainerIsEmptyException;
+import exceptions.ItemStoreException;
 import items.Item;
+import writers.SVGWriter;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Stack extends Container {
     private List<Item> items = new LinkedList<>();
-    @Override
-    public void addItem(Item item) {
-        if(item.getShape().equals(Shape.FLAT)) items.add(item);
-        else throw new IllegalArgumentException("В стопку можно положить только плоские предметы");
-    }
-    @Override
-    public Item takeItem() {
-        return items.remove(items.size() - 1);
+
+    public Stack(String name, int size, String color) {
+        super(name, size, 0, Shape.SQUARE, color, new LinkedList<>(), 0);
     }
 
-    public void showStack() {
-        for(Item item : items) System.out.println(item);
+    public static Stack createDefaultStack() {
+        return new Stack("Stack", 20, "white");
+    }
+
+    @Override
+    public boolean canAddItem(Item item) {
+        super.canAddItem(item);
+        if(!(item.getShape().equals(Shape.FLAT)))  throw new ItemStoreException("Shape must be FLAT");
+        return true;
+    }
+
+    /**
+     * Вытаскивается предмет сверху
+     * @return
+     */
+    @Override
+    public Item takeItem() {
+        if(!canTakeItem()) throw new ContainerIsEmptyException();
+        return items.remove(items.size() - 1);
+
+    }
+
+    @Override
+    public int getW() {
+        return getSize() * 3;
+    }
+
+    @Override
+    public int getH() {
+        return getSize() * 10;
+    }
+
+    @Override
+    public void draw(int x, int y, SVGWriter picture) {
+
     }
 }

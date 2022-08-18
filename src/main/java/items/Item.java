@@ -1,50 +1,39 @@
 package items;
 
+import containers.Container;
 import enums.*;
+import writers.SVGWriter;
 
 public abstract class Item {
     private String name;
-    private double weight;
     private int size;
+    private double weight;
     private Shape shape;
     private String color;
+    private boolean isContained = false;
 
-    //Constructor for class Apple
-    public Item(String name, int size, Shape shape, String color) {
-        try {
-            this.name = name;
-            this.size = size;
-            this.shape = shape;
-            this.color = color;
-        } catch (IllegalArgumentException exception) {
-            exception.printStackTrace();
-            System.out.println("Uncorrected data");
-        }
+    /**
+     * Конструктор Apple
+     */
+    public Item(String name, int size, String color) {
+        this.name = name;
+        if (size > 5) throw new IllegalArgumentException("Incorrect size (>5)!");
+        this.size = size;
+        this.shape = Shape.CIRCLE;
+        this.color = color;
     }
 
-    //Constructor for class Board
-    public Item(String name, double weight, int size, Shape shape) {
-        try {
-            this.name = name;
-            this.weight = weight;
-            this.size = size;
-            this.shape = shape;
-        } catch (IllegalArgumentException exception) {
-            exception.printStackTrace();
-            System.out.println("Uncorrected data");
-        }
-    }
 
-    //Constructor for class Brick
-    public Item(String name, double weight, Shape shape) {
-        try {
-            this.name = name;
-            this.weight = weight;
-            this.shape = shape;
-        } catch (IllegalArgumentException exception) {
-            exception.printStackTrace();
-            System.out.println("Uncorrected data");
+    public Item(String name, int size, double weight, Shape shape, String color) {
+        this.name = name;
+        if(!(this instanceof Container))  {
+            if (size > 5)
+                throw new IllegalArgumentException("Incorrect size (>5)!");
         }
+        this.size = size;
+        this.weight = weight;
+        this.shape = shape;
+        this.color = color;
     }
 
     public String getName() {
@@ -66,6 +55,27 @@ public abstract class Item {
     public String getColor() {
         return color;
     }
+
+    public void setContained(boolean contained) {
+        isContained = contained;
+    }
+
+    public boolean isContained() {
+        return isContained;
+    }
+
+    /**
+     * Ширина предмета
+     */
+    public abstract int getW();
+
+    /**
+     * Высота предмета
+     */
+    public abstract int getH();
+
+    public abstract void draw(int x, int y, SVGWriter picture);
+
 
     @Override
     public String toString() {
