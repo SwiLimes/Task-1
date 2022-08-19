@@ -20,12 +20,16 @@ public class Main {
 
         Box box = Box.createDefaultBox();
         for(int i = 0; i <= 10; ++i) box.addItem(Apple.createDefaultApple());
-//        for(int i = 0; i <= 6; ++i) box.addItem(Board.createDefaultBoard());
+        for(int i = 0; i <= 6; ++i) box.addItem(Board.createDefaultBoard());
+
 //        for(int i = 0; i <= 7; ++i) box.addItem(Brick.createDefaultBrick());
+//        for(int i = 0; i <= 2; ++i) box.addItem(Board.createDefaultBoard());
 
 
 
-        box.draw(150, 150, pic);
+
+
+        box.draw(0, 0, pic);
         pic.writeBody();
         pic.writeFooter();;
 

@@ -50,70 +50,25 @@ public class Box extends Container {
     public void draw(int x, int y, SVGWriter picture) {
         int w = getW();
         int h = getH();
+        /** Отрисовка самого ящики */
         picture.writeRect(x, y, w, h, getColor());
-        int currentX = x;
-        int currentY = y + h;
+
+        int currentX = x; //0
+        int currentY = y + h;   //500
         int maxRowH = 0;
         if (!canTakeItem()) return;
         for (Item item : itemsContainer) {
+            if (currentY - item.getH() < y) throw new ItemStoreException("Cannot add items");
             if (currentX + item.getW() > x + w - item.getW()) {
-                if (currentY - item.getH() * 2 - 2 < y) throw new ItemStoreException(String.format("CurrentY=%d, CurrentX=%d, count=%d", currentY, currentX));
                 currentX = x;
                 maxRowH = item.getH();
+                item.draw(currentX, currentY - item.getH() - maxRowH, picture);
                 currentY -= maxRowH;
-                if (item.getShape().equals(Shape.CIRCLE)) {
-                    item.draw(currentX + item.getW(), currentY - item.getH() * 2 - 2, picture);
-                    currentY -= item.getH();
-                    currentX += item.getW() * 2 + 2;
-                } else {
-                    item.draw(currentX, currentY - item.getH(), picture);
-                    currentX += item.getW();
-                }
+                currentX += item.getW();
             } else {
-                if (item.getShape().equals(Shape.CIRCLE)) {
-                    item.draw(currentX + item.getW(), currentY - item.getH() - 2, picture);
-                    currentX += item.getW() * 2 + 2;
-                } else {
-                    item.draw(currentX, currentY - item.getH(), picture);
-                    currentX += item.getW();
-                }
+                item.draw(currentX, currentY - item.getH(), picture);
+                currentX += item.getW();
             }
         }
-//            if (currentX + item.getW() > x + w - item.getW()) {
-//                currentX = x;
-//                if(item.getShape().equals(Shape.CIRCLE)) {
-//                    maxRowH = item.getH();
-//                    item.draw(currentX + item.getW(), currentY, picture);
-//
-//                    currentX += item.getW()*2 + 2;
-//
-////                    maxRowH = item.getH();
-//                } else {
-//                    currentY -= maxRowH;
-//                    maxRowH = item.getH();
-//
-//                    item.draw(currentX, currentY - item.getH(), picture);
-//                }
-//            } else {
-//                if (item.getShape().equals(Shape.CIRCLE)) {
-//                    item.draw(currentX + item.getW(), currentY - item.getH() - 2, picture);
-//                    currentX += item.getW()*2 + 2;
-//                } else {
-//                    item.draw(currentX, currentY - item.getH(), picture);
-//                    currentX += item.getW();
-//                }
-//            }
-//            if (maxRowH < item.getH()) maxRowH = item.getH();
-//        }
     }
-
 }
-//            if(item.getShape().equals(Shape.CIRCLE)) {
-//                currentY -= item.getH();
-//                draw(currentX, currentY - item.getH(), picture);
-//                currentX += item.getW() * 2;
-//            } else {
-//                item.draw(currentX, currentY - item.getH(), picture);
-////                    currentX += item.getW();
-//            }
-//            draw(currentX, currentY, picture);

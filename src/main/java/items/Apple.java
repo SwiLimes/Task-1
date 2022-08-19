@@ -25,6 +25,10 @@ public class Apple extends Item {
 
     @Override
     public void draw(int x, int y, SVGWriter picture) {
-        picture.writeEllipse(x, y, getW(), getH(), getColor());
+        picture.writeEllipse(x + this.getW()/2, y + this.getH()/2, getW()/2, getH()/2, getColor());
+        /**getW = 100
+         *
+         */
+
     }
 }
